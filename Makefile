@@ -15,3 +15,20 @@ indent:
 clean:
 	sbt clean
 	-$(MAKE) -C csrc clean
+
+docker-launch-new:
+	docker build -t ca-lab3 .
+	docker run -d \
+	-it \
+	--name ca-lab3 \
+	--mount type=bind,source="$$(pwd)",target=/app \
+	ca-lab3
+
+docker-launch-saved:
+	docker start ca-lab3
+
+docker-stop:
+	docker stop ca-lab3
+
+docker-attach:
+	docker exec -it ca-lab3 /bin/bash
