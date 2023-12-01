@@ -17,6 +17,7 @@ clean:
 	-$(MAKE) -C csrc clean
 
 docker-launch-new:
+	cp -r ~/.local/share/riscv-none-elf-gcc .
 	docker build -t ca-lab3 .
 	docker run -d \
 	-it \

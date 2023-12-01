@@ -23,6 +23,9 @@ RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && \
     sdk install java $(sdk list java | grep -o "\b8\.[0-9]*\.[0-9]*\-tem" | head -1) && \
     sdk install sbt
 
+RUN echo "export PATH=\"/app/riscv-none-elf-gcc/bin:\$PATH\"" >> ~/.bashrc && \
+    . ~/.bashrc
+
 WORKDIR "/app"
 
 ENTRYPOINT ["/bin/bash"]

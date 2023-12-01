@@ -1,6 +1,7 @@
 # Project Specific stuff
 test_run_dir/*
 *.vcd
+riscv-none-elf-gcc
 
 # Eclipse Core
 .project
