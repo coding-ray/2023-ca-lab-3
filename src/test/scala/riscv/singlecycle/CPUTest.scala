@@ -113,3 +113,25 @@ class ByteAccessTest extends AnyFlatSpec with ChiselScalatestTester {
     }
   }
 }
+
+class IsPalindrome extends AnyFlatSpec with ChiselScalatestTester {
+  behavior.of("Single Cycle CPU")
+  it should "tell if each of 4 numbers is a palindrome" in {
+    test(new TestTopModule("ispalindrome.asmbin")).withAnnotations(TestAnnotations.annos) { c =>
+      for (i <- 1 to 50) {
+        c.clock.step(1000)
+        c.io.mem_debug_read_address.poke((i * 4).U) // Avoid timeout
+      }
+      for (i <- 1 to 2) {
+        c.io.mem_debug_read_address.poke((4 * i).U)
+        c.clock.step()
+        c.io.mem_debug_read_data.expect(1.U) // palindrome
+      }
+      for (i <- 3 to 4) {
+        c.io.mem_debug_read_address.poke((4 * i).U)
+        c.clock.step()
+        c.io.mem_debug_read_data.expect(2.U) // not palindrome
+      }
+    }
+  }
+}
